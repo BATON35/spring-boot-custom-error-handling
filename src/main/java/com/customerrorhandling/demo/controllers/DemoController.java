@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.ResponseEntity.status;
+
 @RestController
 @RequiredArgsConstructor
 public class DemoController {
@@ -24,14 +26,14 @@ public class DemoController {
     }
 
     @GetMapping("test-custom-parameter-constraint-exception")
-    public ResponseEntity<Void> test2(
+    public ResponseEntity<String> test2(
             @RequestParam("value") int value
     ) {
         if (value < 0 || value > 10) {
             throw new CustomParameterConstraintException("value must be >= 0 and <= 10");
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return status(HttpStatus.OK).body("dupa");
     }
 
     @GetMapping("test-custom-error-exception")
